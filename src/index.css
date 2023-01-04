@@ -11,3 +11,23 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+.firstIn{
+  font-size: 50px;
+  color: blueviolet;
+  margin-left: 900px;
+  
+}
+.secIn{
+  font-size: 50px;
+  color: blueviolet;
+  margin-left: 900px;
+}
+.ranFirstBttn{
+  margin-left: 800px;
+}
+.ranSecBttn{
+  margin-left: 780px;
+}
+.ranSignBttn{
+  margin-bottom: px;
+}
