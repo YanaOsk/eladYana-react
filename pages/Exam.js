@@ -70,6 +70,7 @@ export default function Exam() {
         if(!isExamOver) return
         let savedData = [];
         savedData.push({
+            examId:Math.floor(Math.random()*10000),
             amountOfRightAnswers:countRightAnswers,
             grade,
             startTime,
@@ -81,12 +82,12 @@ export default function Exam() {
     }, [isExamOver])
 
      function postData(){
-     axios.post('http://localhost:3000/api/exam',examData[0]).then((response)=>{
-            console.log("the response is ",response);
-        })
-        .catch((error)=>{
-            console.log("The error is ",error);
-        })
+        axios.post('http://localhost:3000/api/exam',examData[0]).then((response)=>{
+                console.log("the response is ",response);
+            })
+            .catch((error)=>{
+                console.log("The error is ",error);
+            })
     }
      
     function resetQuestions(){
@@ -108,6 +109,18 @@ export default function Exam() {
         let endDate = new Date()
         setEndTime(endDate)
     }
+
+    function deleteData(){
+
+        const inputVal = document.getElementById("inputVal").value
+        console.log("the input vlue is ",inputVal);
+        axios.delete(`http://localhost:3000/api/exam?examId=${inputVal}`).then((response)=>{
+            console.log(response);
+        })
+        .catch((error)=>{
+            console.log(error);
+        })
+    }
     
 
   return (
@@ -124,6 +137,14 @@ export default function Exam() {
         {isShowGrade && <div>{grade}</div>}
         <button onClick={()=>{resetQuestions()}}>RESET QUESTIONS</button>
         <button onClick={()=>{postData()}}>SEND LOG  TO DATABASE </button>
+        <div>
+        <label>Insert exam id for delete from database</label>
+           <div>
+           <input id="inputVal" onChange={(e)=>{console.log(e.target.value)}}/> 
+
+           <button onClick={()=>{deleteData()}}> DELETE EXAM FROM DB </button>
+           </div>
+        </div>
         
     </div>
   )

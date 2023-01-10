@@ -17,7 +17,8 @@ export default function Exercise({question,setQuestions}) {
     <div className='exercise'>
         <h1>{question.firstNumber} {question.sign} {question.secondNumber} = 
         <input 
-        onChange={setUserAnswer} value={question.userAnswer ||  ''} type='text'/></h1>
+        onChange={setUserAnswer} value={question.userAnswer ||  ''} type='text'/>
+        </h1>
     </div>
   )
 }
