@@ -1,5 +1,5 @@
-import '../styles/globals.css'
-import Exam from './Exam'
+
+import react from "react"
 
 export default function App({ Component, pageProps }) {
   return <Component {...pageProps} />

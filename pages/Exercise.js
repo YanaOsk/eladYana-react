@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function Exercise({question,setQuestions}) {
+export default function Exercise({question,setQuestions,makeTheNextExVisible}) {
     function setUserAnswer(e){
         const newQuestion = {...question};
         const val = e.target.value;
@@ -18,6 +18,7 @@ export default function Exercise({question,setQuestions}) {
         <h1>{question.firstNumber} {question.sign} {question.secondNumber} = 
         <input 
         onChange={setUserAnswer} value={question.userAnswer ||  ''} type='text'/>
+        <button onClick={()=>{makeTheNextExVisible()}}> NEXT QUESTION </button>
         </h1>
     </div>
   )

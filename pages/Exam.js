@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from 'react'
-import Exercise from './Exercise';
+import Exercise from './Exercise'
 import axios from 'axios';
-// import { postExam } from '../lib/services/exam.service';
+// import HomePage from './HomePage';
+import { Inter } from '@next/font/google'
+// import styles from '../styles/Home.module.css'
+
 
 const getAnswer = (num1,num2,sign) => {
 
@@ -29,10 +32,19 @@ export default function Exam() {
   const[startTime,setStartTime] = useState(null)
   const[endTime,setEndTime] = useState(null)
   const[isExamOver, setIsExamOver] = useState(false)
+  const[visibleIndex,setVisibleIndex] = useState(0)
+  const[isVisible,setIsVisible] = useState(false)
 
   useEffect(()=>{ 
     createQuestions()
   },[])
+
+  const makeTheNextExVisible = () =>{
+    if(visibleIndex<questions.length-1){
+        setVisibleIndex(visibleIndex+1)
+        setIsVisible(true)
+    }
+}
 
   function createQuestions(){
     const arrayQuestions = []
@@ -44,10 +56,15 @@ export default function Exam() {
         question.secondNumber = Math.floor(Math.random()*10);
         question.sign = signs[Math.floor(Math.random()*4)];
         question.answer = getAnswer(question.firstNumber,question.secondNumber,question.sign);
+        question.isVisible = isVisible
         arrayQuestions.push(question)
     }
+    
     setQuestions(arrayQuestions);
 }
+// questions[0].isVisible = true
+console.log("questions ",questions[0]);
+
     function submitAnswer(){
         let newGrade = 0;
         let countRightAnswer = 0;
@@ -78,7 +95,7 @@ export default function Exam() {
         })
         setExamData(savedData)
         
-        // postData()
+        
     }, [isExamOver])
 
      function postData(){
@@ -125,20 +142,25 @@ export default function Exam() {
 
   return (
     <div>
-        {questions?.map((question)=>{
-            return <Exercise key={question.id} question={question} setQuestions={setQuestions}></Exercise>
+        {questions?.map((question,index)=>{
+            question.isVisible = true
+            if(index === visibleIndex && isVisible === true){
+                
+                console.log("index ",index);
+                // console.log("visible index ",visibleIndex);
+                return <div><Exercise makeTheNextExVisible={makeTheNextExVisible} key={question.id} question={question} setQuestions={setQuestions}></Exercise></div>
+            }
         })}
         <button onClick={()=>{getStartTimeOfExam()}}>START EXAM</button>
         <button onClick={()=>{getEndTimeOfExam()}}>END EXAM</button>
-        <button style={{color:"green"}} onClick={()=>{
+        <button  style={{color:"green"}} onClick={()=>{
             submitAnswer()
-            
             }}>SUBMIT ANSWER</button>
         {isShowGrade && <div>{grade}</div>}
-        <button onClick={()=>{resetQuestions()}}>RESET QUESTIONS</button>
-        <button onClick={()=>{postData()}}>SEND LOG  TO DATABASE </button>
+        <button  onClick={()=>{resetQuestions()}}>RESET QUESTIONS</button>
+        <button  onClick={()=>{postData()}}>SEND EXAM TO DATABASE </button>
         <div>
-        <label>Insert exam id for delete from database</label>
+        <label>Insert exam id to delete from database</label>
            <div>
            <input id="inputVal" onChange={(e)=>{console.log(e.target.value)}}/> 
 
