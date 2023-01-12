@@ -17,8 +17,8 @@ export default function Exercise({question,setQuestions,makeTheNextExVisible}) {
     <div className='exercise'>
         <h1>{question.firstNumber} {question.sign} {question.secondNumber} = 
         <input 
-        onChange={setUserAnswer} value={question.userAnswer ||  ''} type='text'/>
-        <button onClick={()=>{makeTheNextExVisible()}}> NEXT QUESTION </button>
+        onChange={setUserAnswer} value={question.userAnswer ||  '' } id='answerInput' data-row-id={question.id}type='text' />
+        
         </h1>
     </div>
   )
